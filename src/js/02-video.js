@@ -1,13 +1,10 @@
-import Player from '@vimeo/player';
+// const Player = require(`@vimeo/player`);
 
+// // import Player from '@vimeo/player';
+import Player from '@vimeo/player';
+import throttle from 'lodash.throttle';
 const iframe = document.querySelector('iframe');
 const player = new Player.Player(iframe);
-
-// player.on('timeupdate', function (data) {
-//   const currentTime = data.seconds;
-//   localStorage.setItem('videoplayer-current-time', currentTime);
-//   console.log('played the video!');
-// });
 
 player.getVideoTitle().then(function (title) {
   console.log('title:', title);
