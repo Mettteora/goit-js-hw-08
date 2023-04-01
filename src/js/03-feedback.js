@@ -13,9 +13,13 @@ console.log(inputMessage);
 inputMessage.addEventListener(`input`, checkMessage);
 
 inputEmail.addEventListener(`input`, checkEmail);
-
+console.log(info.email.length);
+if (info.email.length > 0) {
+  console.log(`тут не пусто`);
+}
 function checkMessage(e) {
   info.meassage = e.currentTarget.value;
+  console.log(info.email.length);
   console.log(info);
 }
 
@@ -24,6 +28,6 @@ function checkEmail(e) {
   console.log(info);
 }
 
-if (!info.email === ``) {
-  console.log(`тут не пусто `);
-}
+// if (!info.email === ``) {
+//   console.log(`тут не пусто `);
+// }
