@@ -1,9 +1,6 @@
-// Add imports above this line
+// Добавьте импорты выше этой строки
 import { galleryItems } from './gallery-items';
-// Описан в документации
-import SimpleLightbox from 'simplelightbox';
-import SimpleLightbox from 'simplelightbox';
-// Дополнительный импорт стилей
+import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm.js';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const ulGal = document.querySelector(`.gallery`);
@@ -30,13 +27,12 @@ const test = createGallery(galleryItems);
 ulGal.insertAdjacentHTML('afterbegin', test);
 ulGal.addEventListener(`click`, zoomFunc);
 
-const imgEl = document.querySelector(`.gallery__image`);
-
 function zoomFunc(evt) {
-  // if (evt.target.classList.contains(`is-active`)) {
-  //   evt.target.classList.remove(`is-active`);
-  //   console.log(`zdarova`);
-  // }
+  evt.preventDefault();
+
+  if (!evt.target.classList.contains('gallery__image')) {
+    return;
+  }
 
   const activeImg = document.querySelector(`.is-active`);
 
@@ -46,17 +42,17 @@ function zoomFunc(evt) {
     activeImg.classList.remove(`is-active`);
   }
 
-  basicLightbox
-    .create(
-      `
-		<img width="1400" height="900" src="${evt.target.src}">
-	`
-    )
-    .show();
+  const lightbox = new SimpleLightbox({
+    elements: [evt.target],
+  });
+
+  lightbox.on('close.simplelightbox', () => {
+    swatchEl.classList.remove('is-active');
+  });
+
+  lightbox.open();
 
   console.log(evt.target.alt);
 }
-
-console.log(galleryItems);
 
 console.log(galleryItems);
