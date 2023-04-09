@@ -5,7 +5,7 @@
   "homepage": "https://Mettteora.github.io/my-test-project-8",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "https://github.com/Mettteora/my-test-project-8"
+    "build": "https://github.com/Mettteora/my-test-project-8/"
   },
   "repository": {
     "type": "git",
