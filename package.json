@@ -1,11 +1,11 @@
 {
-  "name": "Mettteora",
+  "name": "parcel-project-template",
   "version": "2.0.0",
   "description": "",
-  "homepage": "https://github.com/Mettteora/goit-js-hw-08",
+  "homepage": "https://Mettteora.github.io/my-test-project-8",
   "scripts": {
     "start": "parcel src/*.html",
-    "build": "https://github.com/Mettteora/goit-js-hw-08"
+    "build": "https://github.com/Mettteora/my-test-project-8"
   },
   "repository": {
     "type": "git",
