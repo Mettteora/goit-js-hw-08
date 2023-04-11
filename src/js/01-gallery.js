@@ -1,58 +1,86 @@
-// Добавьте импорты выше этой строки
+// Add imports above this line
 import { galleryItems } from './gallery-items';
-import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm.js';
+import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-const ulGal = document.querySelector(`.gallery`);
+const galleryContainer = document.querySelector('.gallery');
+const gallery = createGalleryDesign(galleryItems);
 
-function createGallery(galleryItems) {
+function createGalleryDesign(galleryItems) {
   return galleryItems
-    .map(({ preview, original, description }) => {
+    .map(({ original, preview, description }) => {
       return `
-        <li class="gallery__item">
-          <a class="gallery__link" href="#">
-            <img
-              class="gallery__image"
-              src="${preview}"
-              data-source="${original}"
-              alt="${description}"
-            />
-          </a>
-        </li>`;
+        <div class="gallery">
+        <a href="${original}">
+        <img src="${preview}" alt="${description}" title=""/>
+        </a>
+        </div>
+        `;
     })
-    .join(``);
+    .join('');
 }
 
-const test = createGallery(galleryItems);
-ulGal.insertAdjacentHTML('afterbegin', test);
-ulGal.addEventListener(`click`, zoomFunc);
+galleryContainer.insertAdjacentHTML('beforeend', gallery);
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  captionsData: 'alt',
+});
 
-function zoomFunc(evt) {
-  evt.preventDefault();
+// // Добавьте импорты выше этой строки
+// import { galleryItems } from './gallery-items';
+// import SimpleLightbox from 'simplelightbox/dist/simple-lightbox.esm.js';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 
-  if (!evt.target.classList.contains('gallery__image')) {
-    return;
-  }
+// const ulGal = document.querySelector(`.gallery`);
 
-  const activeImg = document.querySelector(`.is-active`);
+// function createGallery(galleryItems) {
+//   return galleryItems
+//     .map(({ preview, original, description }) => {
+//       return `
+//         <li class="gallery__item">
+//           <a class="gallery__link" href="#">
+//             <img
+//               class="gallery__image"
+//               src="${preview}"
+//               data-source="${original}"
+//               alt="${description}"
+//             />
+//           </a>
+//         </li>`;
+//     })
+//     .join(``);
+// }
 
-  const swatchEl = evt.target;
-  evt.target.classList.add(`is-active`);
-  if (activeImg) {
-    activeImg.classList.remove(`is-active`);
-  }
+// const test = createGallery(galleryItems);
+// ulGal.insertAdjacentHTML('afterbegin', test);
+// ulGal.addEventListener(`click`, zoomFunc);
 
-  const lightbox = new SimpleLightbox({
-    elements: [evt.target],
-  });
+// function zoomFunc(evt) {
+//   evt.preventDefault();
 
-  lightbox.on('close.simplelightbox', () => {
-    swatchEl.classList.remove('is-active');
-  });
+//   if (!evt.target.classList.contains('gallery__image')) {
+//     return;
+//   }
 
-  lightbox.open();
+//   const activeImg = document.querySelector(`.is-active`);
 
-  console.log(evt.target.alt);
-}
+//   const swatchEl = evt.target;
+//   evt.target.classList.add(`is-active`);
+//   if (activeImg) {
+//     activeImg.classList.remove(`is-active`);
+//   }
 
-console.log(galleryItems);
+//   const lightbox = new SimpleLightbox({
+//     elements: [evt.target],
+//   });
+
+//   lightbox.on('close.simplelightbox', () => {
+//     swatchEl.classList.remove('is-active');
+//   });
+
+//   lightbox.open();
+
+//   console.log(evt.target.alt);
+// }
+
+// console.log(galleryItems);
