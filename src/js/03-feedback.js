@@ -1,33 +1,45 @@
-const info = {
-  email: ``,
-  meassage: ``,
+import throttle from 'lodash.throttle';
+
+const KEY = 'feedback-form-state';
+
+const formSite = {
+  form: document.querySelector('.feedback-form'),
+  input: document.querySelector('.feedback-form  input'),
+  textarea: document.querySelector('.feedback-form  textarea'),
 };
-const inputMessage = document.querySelector(
-  '.feedback-form textarea[name="message"]'
-);
-const inputEmail = document.querySelector('.feedback-form input[name="email"]');
-const btn = document.querySelector('.feedback-form button[type="submit"]');
-const form = document.querySelector(`feedback-form`);
-console.log(inputMessage);
 
-inputMessage.addEventListener(`input`, checkMessage);
+let formSiteDate = {
+  email: formSite.input.value,
+  message: formSite.textarea.value,
+};
 
-inputEmail.addEventListener(`input`, checkEmail);
-console.log(info.email.length);
-if (info.email.length > 0) {
-  console.log(`тут не пусто`);
-}
-function checkMessage(e) {
-  info.meassage = e.currentTarget.value;
-  console.log(info.email.length);
-  console.log(info);
+formSite.form.addEventListener('input', throttle(storageFormData, 500));
+formSite.form.addEventListener('submit', onFormSubmit);
+
+updateInput();
+
+function storageFormData(event) {
+  formSiteDate[event.target.name] = event.target.value.trim();
+  localStorage.setItem(KEY, JSON.stringify(formSiteDate));
 }
 
-function checkEmail(e) {
-  info.email = e.currentTarget.value;
-  console.log(info);
+function onFormSubmit(event) {
+  event.preventDefault();
+
+  const savedSiteData = JSON.parse(localStorage.getItem(KEY));
+  console.log(savedSiteData);
+
+  event.currentTarget.reset();
+  localStorage.removeItem(KEY);
 }
 
-// if (!info.email === ``) {
-//   console.log(`тут не пусто `);
-// }
+function updateInput() {
+  const savedSiteValues = localStorage.getItem(KEY);
+
+  if (savedSiteValues) {
+    formSiteDate = JSON.parse(savedSiteValues);
+    console.log(formSiteDate);
+    formSite.input.value = formSiteDate.email;
+    formSite.textarea.value = formSiteDate.message;
+  }
+}
